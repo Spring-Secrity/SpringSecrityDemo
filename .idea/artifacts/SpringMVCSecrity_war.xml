@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SpringMVCSecrity:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="spring-secrity-rememberme.war">
+      <element id="artifact" artifact-name="SpringMVCSecrity:war exploded" />
+    </root>
+  </artifact>
+</component>
