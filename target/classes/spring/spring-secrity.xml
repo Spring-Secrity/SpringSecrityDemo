@@ -16,10 +16,9 @@
     http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/" access="permitAll"/>
-        <intercept-url pattern="/home" access="permitAll"/>
-        <intercept-url pattern="/admin**" access="hasRole('ADMIN')"/>
-        <intercept-url pattern="/dba**" access="hasRole('ADMIN') and hasRole('DBA')"/>
+        <intercept-url pattern="/" access="hasRole('ADMIN') or hasRole('DBA')"/>
+        <intercept-url pattern="/newuser/**,/delete-user-*" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/edit-user-*" access="hasRole('ADMIN') or hasRole('DBA')"/>
         <form-login login-page="/login"
                     username-parameter="ssoId"
                     password-parameter="password"
@@ -27,11 +26,11 @@
                     />
         <csrf/>
 
-        <!--<remember-me-->
-                <!--remember-me-parameter="remember-me"-->
-                <!--remember-me-cookie="remember-me"-->
-                <!--token-validity-seconds="86400"-->
-                <!--data-source-ref="dataSource" />-->
+        <remember-me
+                remember-me-parameter="remember-me"
+                remember-me-cookie="remember-me"
+                token-validity-seconds="86400"
+                data-source-ref="dataSource" />
     </http>
 
     <authentication-manager >
@@ -44,5 +43,12 @@
     <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
     <beans:bean id="customUserDetailsService" class="com.anlu.secrity.service.impl.CustomUserDetailsService" />
+
+    <!--<beans:bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">-->
+         <!--<beans:property name="userDetailsService" ref="customUserDetailsService"/>-->
+        <!--<beans:property name="passwordEncoder" ref="bcryptEncoder"/>-->
+    <!--</beans:bean>-->
+
+    <!--<beans:bean id="getAuthenticationTrustResolver" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"></beans:bean>-->
 
 </beans:beans>
